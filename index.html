@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FindIt — Centralized Campus Lost & Found System with clear custody status, private ownership verification, and secure handovers.">
+  <title>FindIt — Campus Lost &amp; Found System</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="app-shell">
+    <!-- Mobile Sidebar Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay" hidden></div>
+
+    <!-- Primary Sidebar Navigation (Desktop & Mobile Drawer) -->
+    <aside id="app-sidebar" class="sidebar" aria-label="Primary navigation">
+      <div class="sidebar-header">
+        <button type="button" class="brand-link" data-nav="home" aria-label="FindIt Home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <path d="M11 8v6"></path>
+              <path d="M8 11h6"></path>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <strong>FindIt</strong>
+            <small>Campus Lost &amp; Found</small>
+          </span>
+        </button>
+        <button type="button" id="btn-close-sidebar" class="icon-btn sidebar-close-btn" aria-label="Close navigation menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main pages">
+        <ul class="nav-list">
+          <li>
+            <button type="button" class="nav-item is-active" data-nav="home" aria-current="page">
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"></path>
+              </svg>
+              <span>Home</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-item" data-nav="browse">
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>Browse Items</span>
+              <span id="nav-active-count" class="nav-pill">0</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-item" data-nav="report">
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+              <span>Report Found Item</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-item" data-nav="my-reports">
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="8" y1="13" x2="16" y2="13"></line>
+                <line x1="8" y1="17" x2="13" y2="17"></line>
+              </svg>
+              <span>My Reports</span>
+              <span id="nav-pending-reviews" class="nav-pill nav-pill-alert" hidden>0</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-item" data-nav="my-claims">
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+              <span>My Claims</span>
+              <span id="nav-claims-count" class="nav-pill" hidden>0</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-item" data-nav="profile">
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Profile</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="demo-user-mini">
+          <div id="sidebar-user-avatar" class="avatar-circle" aria-hidden="true">TG</div>
+          <div class="demo-user-meta">
+            <strong id="sidebar-user-name">Tanmay Gupta</strong>
+            <small id="sidebar-user-id">MAINS-43925 &middot; Demo</small>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm btn-block" data-nav="profile">
+          Switch Demo Student
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="workspace">
+      <!-- Top Header Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="btn-open-sidebar" class="icon-btn mobile-menu-btn" aria-label="Open navigation menu" aria-controls="app-sidebar" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="topbar-title-group">
+            <span id="topbar-page-title" class="topbar-title">Home Dashboard</span>
+            <span class="demo-tag" title="Data is stored locally in your browser using localStorage">Demo Mode</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button type="button" class="btn btn-primary btn-sm topbar-report-btn" data-nav="report">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Report Found</span>
+          </button>
+
+          <button type="button" id="btn-notifications" class="icon-btn notif-btn" aria-label="Open notifications" aria-expanded="false" aria-controls="notifications-panel">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span id="notif-badge" class="notif-badge" hidden>0</span>
+          </button>
+
+          <button type="button" class="topbar-user-btn" data-nav="profile" aria-label="Open profile and demo settings">
+            <span id="topbar-user-avatar" class="avatar-circle avatar-sm" aria-hidden="true">TG</span>
+            <span id="topbar-user-name" class="topbar-user-name">Tanmay</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Application Views -->
+      <main id="main-content" class="main-content">
+
+        <!-- ================================================================ -->
+        <!-- VIEW 1: HOME DASHBOARD                                           -->
+        <!-- ================================================================ -->
+        <section id="view-home" class="view is-active" data-view="home" aria-labelledby="home-heading">
+          <div class="hero-card">
+            <div class="hero-content">
+              <span class="eyebrow-badge">Centralized Campus Noticeboard</span>
+              <h1 id="home-heading">Find lost belongings without running across campus.</h1>
+              <p class="hero-subtitle">
+                Welcome back, <strong id="home-welcome-name">Tanmay Gupta</strong>. Search one shared record across campus buildings, check exact custody status, and verify ownership privately.
+              </p>
+
+              <!-- Dashboard Quick Search & Filter Bar -->
+              <form id="home-search-form" class="quick-search-bar" role="search" aria-label="Quick search found items">
+                <div class="search-input-wrap">
+                  <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <label for="home-search-input" class="sr-only">Search found items by keyword</label>
+                  <input type="search" id="home-search-input" class="form-input" placeholder="Search items (e.g., charger, notebook, keys, bottle)...">
+                </div>
+
+                <div class="quick-filter-group">
+                  <label for="home-category-filter" class="sr-only">Filter by category</label>
+                  <select id="home-category-filter" class="form-select">
+                    <option value="">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Notebooks & Books">Notebooks &amp; Books</option>
+                    <option value="Water Bottles & Personal">Water Bottles &amp; Personal</option>
+                    <option value="Keys & Cards">Keys &amp; Cards</option>
+                    <option value="Audio & Accessories">Audio &amp; Accessories</option>
+                    <option value="Bags & Clothing">Bags &amp; Clothing</option>
+                    <option value="Other">Other</option>
+                  </select>
+
+                  <label for="home-zone-filter" class="sr-only">Filter by campus zone</label>
+                  <select id="home-zone-filter" class="form-select">
+                    <option value="">All Campus Zones</option>
+                    <option value="Library">Library</option>
+                    <option value="Science Block">Science Block</option>
+                    <option value="Cafeteria">Cafeteria</option>
+                    <option value="Main Gate">Main Gate</option>
+                    <option value="Sports Complex">Sports Complex</option>
+                    <option value="Engineering Block">Engineering Block</option>
+                    <option value="Lecture Hall">Lecture Hall</option>
+                    <option value="Admin Block">Admin Block</option>
+                    <option value="Hostel Area">Hostel Area</option>
+                  </select>
+
+                  <button type="submit" class="btn btn-primary">Search Board</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="hero-actions-panel">
+              <div class="quick-report-box">
+                <h2>Found something on campus?</h2>
+                <p>Log it in under a minute. Keep identifying marks and photos hidden behind a private question to prevent false claims.</p>
+                <button type="button" class="btn btn-primary btn-block" data-nav="report">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>Report Found Item</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Campus Statistics -->
+          <div class="stats-grid" aria-label="Campus recovery statistics">
+            <article class="stat-card">
+              <div class="stat-icon stat-icon-blue" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+              </div>
+              <div class="stat-body">
+                <span class="stat-label">Total Reports</span>
+                <strong id="stat-total-reports" class="stat-value">0</strong>
+                <span class="stat-caption">Centralized campus entries</span>
+              </div>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon stat-icon-amber" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div class="stat-body">
+                <span class="stat-label">Active Listings</span>
+                <strong id="stat-active-listings" class="stat-value">0</strong>
+                <span class="stat-caption">Awaiting owner verification</span>
+              </div>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon stat-icon-green" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div class="stat-body">
+                <span class="stat-label">Recovered Items</span>
+                <strong id="stat-recovered-items" class="stat-value">0</strong>
+                <span class="stat-caption">Verified &amp; safely returned</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- Recent Found Items Section -->
+          <div class="section-block">
+            <div class="section-header">
+              <div>
+                <h2 class="section-title">Recent Found Items</h2>
+                <p class="section-subtitle">Public listings show vague titles and custody badges only. Identifying marks remain locked.</p>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" data-nav="browse">View All Items &rarr;</button>
+            </div>
+
+            <div id="home-recent-items" class="items-grid" aria-live="polite">
+              <!-- Populated dynamically by script.js -->
+            </div>
+
+            <div id="home-recent-empty" class="empty-state" hidden>
+              <h3>No active found items right now</h3>
+              <p>Every reported item has been recovered, or no reports match yet.</p>
+              <button type="button" class="btn btn-primary" data-nav="report">Report a Found Item</button>
+            </div>
+          </div>
+
+          <!-- How FindIt Works -->
+          <div class="section-block">
+            <div class="section-header">
+              <div>
+                <h2 class="section-title">How FindIt Works</h2>
+                <p class="section-subtitle">Designed around student feedback to stop wasted trips across campus and prevent false ownership claims.</p>
+              </div>
+            </div>
+
+            <div class="steps-grid">
+              <article class="step-card">
+                <span class="step-num">1</span>
+                <h3>Search One Central Board</h3>
+                <p>Filter by item keyword, category, and campus zone instead of visiting four separate desks or scrolling buried group chats.</p>
+              </article>
+
+              <article class="step-card">
+                <span class="step-num">2</span>
+                <h3>Check Custody Status</h3>
+                <p>See immediately whether an item is <strong>Held by Finder</strong>, <strong>At Specific Guard Booth</strong>, or <strong>Left on Bench</strong>.</p>
+              </article>
+
+              <article class="step-card">
+                <span class="step-num">3</span>
+                <h3>Verify Privately</h3>
+                <p>Answer the finder&rsquo;s secret question. No public identifying photos or open comment threads where scammers can guess.</p>
+              </article>
+
+              <article class="step-card">
+                <span class="step-num">4</span>
+                <h3>Complete Verified Handover</h3>
+                <p>Once approved by the finder, private pickup details unlock so you can collect your item and mark it recovered.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- VIEW 2: BROWSE AND SEARCH ITEMS                                  -->
+        <!-- ================================================================ -->
+        <section id="view-browse" class="view" data-view="browse" aria-labelledby="browse-heading" hidden>
+          <div class="page-header">
+            <div>
+              <h1 id="browse-heading">Browse Found Items</h1>
+              <p class="page-subtitle">Search across all campus zones. Only vague titles and custody badges are shown publicly.</p>
+            </div>
+            <button type="button" class="btn btn-primary" data-nav="report">+ Report Found Item</button>
+          </div>
+
+          <!-- Filter Toolbar -->
+          <div class="filter-panel" role="search" aria-label="Filter found items">
+            <div class="filter-row-main">
+              <div class="search-input-wrap filter-search">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <label for="browse-search" class="sr-only">Search items</label>
+                <input type="search" id="browse-search" class="form-input" placeholder="Search by title, description, zone, or ID...">
+              </div>
+
+              <button type="button" id="btn-clear-filters" class="btn btn-secondary">Clear Filters</button>
+            </div>
+
+            <div class="filter-row-selects">
+              <div class="filter-field">
+                <label for="browse-category">Category</label>
+                <select id="browse-category" class="form-select">
+                  <option value="">All Categories</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Notebooks & Books">Notebooks &amp; Books</option>
+                  <option value="Water Bottles & Personal">Water Bottles &amp; Personal</option>
+                  <option value="Keys & Cards">Keys &amp; Cards</option>
+                  <option value="Audio & Accessories">Audio &amp; Accessories</option>
+                  <option value="Bags & Clothing">Bags &amp; Clothing</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="filter-field">
+                <label for="browse-zone">Campus Zone</label>
+                <select id="browse-zone" class="form-select">
+                  <option value="">All Campus Zones</option>
+                  <option value="Library">Library</option>
+                  <option value="Science Block">Science Block</option>
+                  <option value="Cafeteria">Cafeteria</option>
+                  <option value="Main Gate">Main Gate</option>
+                  <option value="Sports Complex">Sports Complex</option>
+                  <option value="Engineering Block">Engineering Block</option>
+                  <option value="Lecture Hall">Lecture Hall</option>
+                  <option value="Admin Block">Admin Block</option>
+                  <option value="Hostel Area">Hostel Area</option>
+                </select>
+              </div>
+
+              <div class="filter-field">
+                <label for="browse-custody">Custody Status</label>
+                <select id="browse-custody" class="form-select">
+                  <option value="">All Custody Types</option>
+                  <option value="Held by Finder">Held by Finder</option>
+                  <option value="At Specific Guard Booth">At Specific Guard Booth</option>
+                  <option value="Left on Bench">Left on Bench</option>
+                </select>
+              </div>
+
+              <div class="filter-field">
+                <label for="browse-status">Listing Status</label>
+                <select id="browse-status" class="form-select">
+                  <option value="active" selected>Active Listings</option>
+                  <option value="recovered">Recovered Records</option>
+                  <option value="all">All Listings</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="results-meta">
+            <p id="browse-results-count" aria-live="polite">Showing 0 items</p>
+            <span class="privacy-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              Identifying details hidden until verified
+            </span>
+          </div>
+
+          <div id="browse-items-grid" class="items-grid" aria-live="polite">
+            <!-- Populated dynamically by script.js -->
+          </div>
+
+          <div id="browse-empty-state" class="empty-state" hidden>
+            <div class="empty-icon" aria-hidden="true">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <h3>No matching items found</h3>
+            <p>Try clearing one or more filters, searching with a broader keyword, or checking Recovered Records.</p>
+            <div class="empty-actions">
+              <button type="button" id="btn-empty-clear-filters" class="btn btn-secondary">Clear All Filters</button>
+              <button type="button" class="btn btn-primary" data-nav="report">Report Found Item</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- VIEW 3: REPORT FOUND ITEM (V2 Screen 2)                          -->
+        <!-- ================================================================ -->
+        <section id="view-report" class="view" data-view="report" aria-labelledby="report-heading" hidden>
+          <div class="page-header">
+            <div>
+              <button type="button" class="btn-link back-link" data-nav="browse">&larr; Back to Browse Items</button>
+              <h1 id="report-heading">Report Found Item</h1>
+              <p class="page-subtitle">Enter a general public title and lock identifying evidence behind a secret verification question.</p>
+            </div>
+          </div>
+
+          <div class="report-layout">
+            <form id="report-form" class="card form-card" novalidate>
+              <!-- Section 1: Public Listing Information -->
+              <fieldset class="form-section">
+                <legend class="form-section-title">1. Public Listing Information</legend>
+                <p class="form-section-hint">Visible on the campus noticeboard. Hide brand names, serial numbers, or personal marks so only the real owner can identify the item.</p>
+
+                <div class="form-group">
+                  <label for="report-title">Vague Public Title <span class="label-hint">(Hide brand/marks)</span> <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input type="text" id="report-title" name="title" class="form-input" placeholder="e.g., Black Charger, Physics Notebook, Earbuds Case" maxlength="80" required aria-describedby="err-report-title">
+                  <span id="err-report-title" class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="report-category">Category <span class="required-mark" aria-hidden="true">*</span></label>
+                    <select id="report-category" name="category" class="form-select" required aria-describedby="err-report-category">
+                      <option value="">Select a category</option>
+                      <option value="Electronics">Electronics</option>
+                      <option value="Notebooks & Books">Notebooks &amp; Books</option>
+                      <option value="Water Bottles & Personal">Water Bottles &amp; Personal</option>
+                      <option value="Keys & Cards">Keys &amp; Cards</option>
+                      <option value="Audio & Accessories">Audio &amp; Accessories</option>
+                      <option value="Bags & Clothing">Bags &amp; Clothing</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <span id="err-report-category" class="field-error" role="alert"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="report-zone">Campus Zone <span class="required-mark" aria-hidden="true">*</span></label>
+                    <select id="report-zone" name="zone" class="form-select" required aria-describedby="err-report-zone">
+                      <option value="">Select campus zone</option>
+                      <option value="Library">Library</option>
+                      <option value="Science Block">Science Block</option>
+                      <option value="Cafeteria">Cafeteria</option>
+                      <option value="Main Gate">Main Gate</option>
+                      <option value="Sports Complex">Sports Complex</option>
+                      <option value="Engineering Block">Engineering Block</option>
+                      <option value="Lecture Hall">Lecture Hall</option>
+                      <option value="Admin Block">Admin Block</option>
+                      <option value="Hostel Area">Hostel Area</option>
+                    </select>
+                    <span id="err-report-zone" class="field-error" role="alert"></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="report-description">General Description <span class="required-mark" aria-hidden="true">*</span></label>
+                  <textarea id="report-description" name="description" class="form-textarea" rows="3" maxlength="300" placeholder="Briefly describe where it was spotted without revealing unique scratches, stickers, or written names." required aria-describedby="err-report-description"></textarea>
+                  <span id="err-report-description" class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="report-date">Date Found <span class="required-mark" aria-hidden="true">*</span></label>
+                    <input type="date" id="report-date" name="dateFound" class="form-input" required aria-describedby="err-report-date">
+                    <span id="err-report-date" class="field-error" role="alert"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="report-location-detail">Specific Spot / Guard Booth <span class="label-hint">(Optional)</span></label>
+                    <input type="text" id="report-location-detail" name="locationDetail" class="form-input" maxlength="100" placeholder="e.g., 2nd floor reading table, Main Gate Guard Booth">
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Section 2: Custody Status -->
+              <fieldset class="form-section">
+                <legend class="form-section-title">2. Custody Status <span class="required-mark" aria-hidden="true">*</span></legend>
+                <p class="form-section-hint">Displayed prominently on every item card so owners know immediately where the item currently is.</p>
+
+                <div class="radio-card-group" role="radiogroup" aria-describedby="err-report-custody">
+                  <label class="radio-card">
+                    <input type="radio" name="custodyStatus" value="Held by Finder" checked>
+                    <span class="radio-card-content">
+                      <strong>Held by Finder</strong>
+                      <small>You have the item safely and will coordinate handover after verifying the owner.</small>
+                    </span>
+                  </label>
+
+                  <label class="radio-card">
+                    <input type="radio" name="custodyStatus" value="At Specific Guard Booth">
+                    <span class="radio-card-content">
+                      <strong>At Specific Guard Booth</strong>
+                      <small>Deposited at a campus guard cabin, library desk, or security booth.</small>
+                    </span>
+                  </label>
+
+                  <label class="radio-card">
+                    <input type="radio" name="custodyStatus" value="Left on Bench">
+                    <span class="radio-card-content">
+                      <strong>Left on Bench</strong>
+                      <small>Spotted on campus without taking custody so the owner can retrace quickly.</small>
+                    </span>
+                  </label>
+                </div>
+                <span id="err-report-custody" class="field-error" role="alert"></span>
+              </fieldset>
+
+              <!-- Section 3: Private Ownership Verification -->
+              <fieldset class="form-section">
+                <legend class="form-section-title">3. Private Verification &amp; Hidden Evidence</legend>
+                <p class="form-section-hint">Only the secret question is shown to claimants. Your secret answer and uploaded photo stay private.</p>
+
+                <div class="form-group">
+                  <label for="report-photo">Private Photo Upload <span class="label-hint">(Optional &mdash; Hidden, Not Public)</span></label>
+                  <div class="private-upload-box">
+                    <div class="private-upload-badge">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                      </svg>
+                      <span>HIDDEN &mdash; NOT PUBLIC</span>
+                    </div>
+                    <p class="private-upload-help">Photos are never shown on the noticeboard. They unlock only after you approve a verified claim.</p>
+                    <input type="file" id="report-photo" name="photo" class="file-input" accept="image/*">
+                    <div id="report-photo-preview-wrap" class="photo-preview-wrap" hidden>
+                      <img id="report-photo-preview" src="" alt="Private preview of uploaded item">
+                      <button type="button" id="btn-remove-photo" class="btn btn-secondary btn-sm">Remove Photo</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="report-secret-question">Private Verification Question <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input type="text" id="report-secret-question" name="secretQuestion" class="form-input" maxlength="160" placeholder="e.g., What initials or sticker are written on it?" required aria-describedby="err-report-question">
+                  <span id="err-report-question" class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="report-secret-answer">Private Verification Answer <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input type="text" id="report-secret-answer" name="secretAnswer" class="form-input" maxlength="160" placeholder="e.g., T: CS (Stored privately for your review only)" required aria-describedby="err-report-answer">
+                  <span id="err-report-answer" class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="report-handover-note">Suggested Handover / Pickup Instructions <span class="label-hint">(Private until approved)</span></label>
+                  <input type="text" id="report-handover-note" name="handoverNote" class="form-input" maxlength="180" placeholder="e.g., Meet at Main Gate Guard Booth around 4:00 PM">
+                </div>
+              </fieldset>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-lg">Submit Found Item</button>
+                <button type="button" id="btn-reset-report-form" class="btn btn-secondary">Clear Form</button>
+              </div>
+            </form>
+
+            <!-- Helpful Side Guidance -->
+            <aside class="report-guidance">
+              <div class="card guidance-card">
+                <h3>Why keep titles vague?</h3>
+                <p>During campus research, finders reported that naming exact brands or posting public photos attracted false claims and troll messages.</p>
+                <ul class="checklist">
+                  <li><strong>Good title:</strong> &ldquo;Black Charger&rdquo; or &ldquo;Earbuds Case&rdquo;</li>
+                  <li><strong>Avoid:</strong> Brand, model number, or stickers in public fields</li>
+                  <li><strong>Good secret question:</strong> &ldquo;What is written on the tape?&rdquo; or &ldquo;What colour keychain is attached?&rdquo;</li>
+                </ul>
+              </div>
+
+              <div class="card guidance-card">
+                <h3>Custody Badge Guide</h3>
+                <ul class="custody-legend">
+                  <li>
+                    <span class="badge badge-custody-finder">Held by Finder</span>
+                    <small>Item stays with you until ownership is approved.</small>
+                  </li>
+                  <li>
+                    <span class="badge badge-custody-guard">At Guard Booth</span>
+                    <small>Deposited at a security cabin or building desk.</small>
+                  </li>
+                  <li>
+                    <span class="badge badge-custody-bench">Left on Bench</span>
+                    <small>Sighting logged without picking up the item.</small>
+                  </li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- VIEW 4: ITEM DETAILS & OWNERSHIP VERIFICATION (V2 Screen 3)      -->
+        <!-- ================================================================ -->
+        <section id="view-item-detail" class="view" data-view="item-detail" aria-labelledby="detail-title" hidden>
+          <div class="page-header">
+            <div>
+              <button type="button" id="btn-detail-back" class="btn-link back-link">&larr; Back to Browse Items</button>
+              <div class="detail-title-row">
+                <h1 id="detail-title">Item Title</h1>
+                <span id="detail-status-badge" class="badge badge-status-active">Active</span>
+              </div>
+              <p id="detail-meta-line" class="page-subtitle">Item ID &middot; Category &middot; Reported Date</p>
+            </div>
+          </div>
+
+          <div class="detail-layout">
+            <!-- Left: Public Information Only -->
+            <div class="card detail-card">
+              <div class="locked-evidence-box">
+                <div class="locked-icon-circle" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+                <p class="locked-title">Item details &amp; photo are hidden until ownership is verified.</p>
+                <p id="detail-photo-indicator" class="locked-subtext">Private verification prevents false ownership claims.</p>
+              </div>
+
+              <div class="detail-info-grid">
+                <div class="info-item">
+                  <span class="info-label">Custody Status</span>
+                  <div id="detail-custody-badge-wrap">
+                    <span id="detail-custody-badge" class="badge badge-custody-finder">Held by Finder</span>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <span class="info-label">Campus Zone</span>
+                  <strong id="detail-zone">Library</strong>
+                </div>
+
+                <div class="info-item">
+                  <span class="info-label">Category</span>
+                  <strong id="detail-category">Electronics</strong>
+                </div>
+
+                <div class="info-item">
+                  <span class="info-label">Date Found</span>
+                  <strong id="detail-date">2026-11-10</strong>
+                </div>
+              </div>
+
+              <div class="detail-description-block">
+                <h2>General Description</h2>
+                <p id="detail-description">General public description will appear here.</p>
+              </div>
+
+              <div class="privacy-notice-banner">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <p><strong>Privacy Protected:</strong> Private verification answers, identifying marks, finder contact info, and public comment threads are intentionally omitted.</p>
+              </div>
+            </div>
+
+            <!-- Right: Ownership Verification Gate -->
+            <div class="card verify-card">
+              <div id="detail-claim-intro">
+                <h2>Think this belongs to you?</h2>
+                <p class="card-muted">Start a private ownership claim by answering the finder&rsquo;s secret verification question.</p>
+                <button type="button" id="btn-open-claim-form" class="btn btn-primary btn-block btn-lg">
+                  Claim This Item
+                </button>
+              </div>
+
+              <!-- Ownership Verification Form (revealed when Claim This Item is clicked) -->
+              <form id="claim-form" class="claim-form" novalidate hidden>
+                <div class="verify-header">
+                  <span class="eyebrow-badge">Ownership Verification</span>
+                  <h2>Verify Ownership</h2>
+                </div>
+
+                <div class="secret-question-box">
+                  <span class="secret-question-label">Finder&rsquo;s Secret Question</span>
+                  <p id="verify-question-text" class="secret-question-text">What is written on it?</p>
+                </div>
+
+                <div class="form-group">
+                  <label for="claim-answer-input">Your Answer <span class="required-mark" aria-hidden="true">*</span></label>
+                  <textarea id="claim-answer-input" name="claimAnswer" class="form-textarea" rows="3" maxlength="200" placeholder="Type your answer to prove ownership..." required aria-describedby="err-claim-answer"></textarea>
+                  <span id="err-claim-answer" class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="claim-note-input">Additional Proof or Preferred Pickup Time <span class="label-hint">(Optional)</span></label>
+                  <input type="text" id="claim-note-input" name="claimNote" class="form-input" maxlength="160" placeholder="e.g., Free after 4 PM near Main Gate">
+                </div>
+
+                <p class="form-note">
+                  Your answer will be reviewed privately by the finder. Pickup details remain locked until your claim is approved.
+                </p>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary btn-block">Submit Answer</button>
+                  <button type="button" id="btn-cancel-claim-form" class="btn btn-secondary btn-block">Cancel</button>
+                </div>
+              </form>
+
+              <!-- Alternate State: Current user is the finder / already claimed / already recovered -->
+              <div id="detail-claim-status-box" class="status-callout" hidden>
+                <h3 id="detail-callout-title">Status Notice</h3>
+                <p id="detail-callout-text"></p>
+                <div id="detail-callout-actions" class="callout-actions"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- VIEW 5: REVIEW OWNERSHIP CLAIM (Finder-Side — V2 Screen 4)       -->
+        <!-- ================================================================ -->
+        <section id="view-review-claim" class="view" data-view="review-claim" aria-labelledby="review-heading" hidden>
+          <div class="page-header">
+            <div>
+              <button type="button" class="btn-link back-link" data-nav="my-reports">&larr; Back to My Reports</button>
+              <div class="detail-title-row">
+                <h1 id="review-heading">Review Ownership Claim</h1>
+                <span id="review-claim-status-badge" class="badge badge-claim-pending">Pending Review</span>
+              </div>
+              <p id="review-meta-line" class="page-subtitle">Claim ID &middot; Submitted Date</p>
+            </div>
+          </div>
+
+          <div class="review-layout">
+            <!-- Left: Claim & Verification Comparison -->
+            <div class="card review-card">
+              <div class="review-item-summary">
+                <div>
+                  <span class="info-label">Item Being Claimed</span>
+                  <h2 id="review-item-title">Black Charger</h2>
+                  <p id="review-item-meta" class="card-muted">Library &middot; Held by Finder &middot; Item ID</p>
+                </div>
+                <span id="review-custody-badge" class="badge badge-custody-finder">Held by Finder</span>
+              </div>
+
+              <div class="review-claimant-bar">
+                <div>
+                  <span class="info-label">Claimant</span>
+                  <strong id="review-claimant-name">Student Name</strong>
+                </div>
+                <div>
+                  <span class="info-label">Claim ID</span>
+                  <strong id="review-claim-id">CLM-0001</strong>
+                </div>
+                <div>
+                  <span class="info-label">Submitted</span>
+                  <strong id="review-claim-date">10 Nov 2026</strong>
+                </div>
+              </div>
+
+              <div class="secret-question-box">
+                <span class="secret-question-label">Your Secret Verification Question</span>
+                <p id="review-secret-question" class="secret-question-text">What is written on it?</p>
+              </div>
+
+              <div class="comparison-grid">
+                <div class="comparison-box comparison-claimant">
+                  <span class="info-label">Claimant&rsquo;s Submitted Answer</span>
+                  <p id="review-claimant-answer" class="answer-quote">&ldquo;T: CS&rdquo;</p>
+                  <p id="review-claimant-note" class="answer-note" hidden></p>
+                </div>
+
+                <div class="comparison-box comparison-private">
+                  <span class="info-label">Your Stored Private Answer <span class="label-hint">(Finder Only)</span></span>
+                  <p id="review-private-answer" class="answer-quote">&ldquo;T: CS&rdquo;</p>
+                  <span id="review-match-indicator" class="match-hint">Compare carefully before deciding.</span>
+                </div>
+              </div>
+
+              <p class="form-note">
+                Pickup information remains private until approval. Rejecting a false claim keeps the listing open for the legitimate owner.
+              </p>
+            </div>
+
+            <!-- Right: Handover Setup & Approve/Reject Decision -->
+            <div class="card decision-card">
+              <h2>Finder Decision &amp; Handover Details</h2>
+              <p class="card-muted">Confirm the pickup location and time that will unlock if you approve this claim.</p>
+
+              <form id="review-decision-form" novalidate>
+                <div class="form-group">
+                  <label for="review-pickup-location">Pickup Location <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input type="text" id="review-pickup-location" class="form-input" maxlength="120" placeholder="e.g., Main Gate Guard Booth / Library Desk" required aria-describedby="err-review-pickup">
+                  <span id="err-review-pickup" class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="review-handover-date">Agreed Date <span class="required-mark" aria-hidden="true">*</span></label>
+                    <input type="date" id="review-handover-date" class="form-input" required aria-describedby="err-review-date">
+                    <span id="err-review-date" class="field-error" role="alert"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="review-handover-time">Agreed Time <span class="required-mark" aria-hidden="true">*</span></label>
+                    <input type="text" id="review-handover-time" class="form-input" maxlength="40" placeholder="e.g., 4:00 PM" required aria-describedby="err-review-time">
+                    <span id="err-review-time" class="field-error" role="alert"></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="review-handover-instructions">Private Handover Instructions <span class="required-mark" aria-hidden="true">*</span></label>
+                  <textarea id="review-handover-instructions" class="form-textarea" rows="3" maxlength="240" placeholder="e.g., Meet at Main Gate Guard Booth and show your campus ID." required aria-describedby="err-review-instructions"></textarea>
+                  <span id="err-review-instructions" class="field-error" role="alert"></span>
+                </div>
+
+                <div id="review-action-buttons" class="decision-actions">
+                  <button type="button" id="btn-approve-claim" class="btn btn-success btn-block btn-lg">
+                    &#10003; Approve Claim
+                  </button>
+                  <button type="button" id="btn-reject-claim" class="btn btn-danger btn-block">
+                    &#10005; Reject Claim
+                  </button>
+                </div>
+
+                <div id="review-resolved-banner" class="status-callout" hidden>
+                  <h3 id="review-resolved-title">Claim Reviewed</h3>
+                  <p id="review-resolved-text"></p>
+                  <div id="review-resolved-actions" class="callout-actions"></div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- VIEW 6: VERIFIED HANDOVER (V2 Screen 5)                          -->
+        <!-- ================================================================ -->
+        <section id="view-handover" class="view" data-view="handover" aria-labelledby="handover-heading" hidden>
+          <div class="page-header">
+            <div>
+              <button type="button" id="btn-handover-back" class="btn-link back-link">&larr; Back</button>
+              <h1 id="handover-heading">Verified Handover</h1>
+              <p class="page-subtitle">Ownership verified. Private pickup instructions are now unlocked for both finder and claimant.</p>
+            </div>
+          </div>
+
+          <div class="handover-wrapper">
+            <div class="card handover-card">
+              <div id="handover-status-banner" class="handover-status-banner is-approved">
+                <div class="handover-check-circle" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <span id="handover-status-pill" class="handover-pill">CLAIM APPROVED</span>
+                  <h2 id="handover-item-title">Black Charger</h2>
+                  <p id="handover-meta-line">Claim ID &middot; Item ID &middot; Library</p>
+                </div>
+              </div>
+
+              <div class="handover-section">
+                <h3>Pickup Location</h3>
+                <div class="pickup-location-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <div>
+                    <strong id="handover-pickup-location">Main Gate Guard Booth</strong>
+                    <small id="handover-custody-note">Custody Status: Held by Finder</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="handover-section">
+                <h3>Handover Details <span class="label-hint">(Private)</span></h3>
+                <div class="handover-details-grid">
+                  <div class="handover-detail-item">
+                    <span class="info-label">Agreed Date</span>
+                    <strong id="handover-date">10 Nov 2026</strong>
+                  </div>
+                  <div class="handover-detail-item">
+                    <span class="info-label">Agreed Time</span>
+                    <strong id="handover-time">4:00 PM</strong>
+                  </div>
+                  <div class="handover-detail-item handover-detail-full">
+                    <span class="info-label">Private Handover Instructions</span>
+                    <p id="handover-instructions">Meet at Main Gate Guard Booth.</p>
+                  </div>
+                  <div class="handover-detail-item">
+                    <span class="info-label">Finder</span>
+                    <strong id="handover-finder-name">Finder Name</strong>
+                  </div>
+                  <div class="handover-detail-item">
+                    <span class="info-label">Verified Claimant</span>
+                    <strong id="handover-claimant-name">Claimant Name</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Unlocked Private Photo (Shown only if finder uploaded a photo) -->
+              <div id="handover-photo-section" class="handover-section" hidden>
+                <h3>Unlocked Private Evidence Photo</h3>
+                <div class="unlocked-photo-frame">
+                  <img id="handover-unlocked-photo" src="" alt="Unlocked private photo of verified found item">
+                </div>
+              </div>
+
+              <div class="handover-actions">
+                <button type="button" id="btn-mark-recovered" class="btn btn-primary btn-lg">
+                  Mark as Recovered
+                </button>
+                <button type="button" class="btn btn-secondary" data-nav="browse">
+                  Return to Noticeboard
+                </button>
+              </div>
+
+              <div id="handover-recovered-banner" class="recovered-complete-box" hidden>
+                <strong>Item Recovered &amp; Closed</strong>
+                <p id="handover-recovered-date">This item has been moved out of active listings into recovered campus records.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- VIEW 7: MY REPORTS                                               -->
+        <!-- ================================================================ -->
+        <section id="view-my-reports" class="view" data-view="my-reports" aria-labelledby="my-reports-heading" hidden>
+          <div class="page-header">
+            <div>
+              <h1 id="my-reports-heading">My Reports</h1>
+              <p class="page-subtitle">Items reported by <strong id="my-reports-user-name">Tanmay Gupta</strong>. Review incoming ownership claims and coordinate handovers.</p>
+            </div>
+            <button type="button" class="btn btn-primary" data-nav="report">+ Report Found Item</button>
+          </div>
+
+          <div class="tab-bar" role="tablist" aria-label="Filter my reports">
+            <button type="button" class="tab-btn is-active" role="tab" aria-selected="true" data-reports-tab="all">All Reports</button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-reports-tab="active">Active</button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-reports-tab="pending-claims">Needs Review</button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-reports-tab="recovered">Recovered</button>
+          </div>
+
+          <div id="my-reports-list" class="records-list" aria-live="polite">
+            <!-- Populated dynamically by script.js -->
+          </div>
+
+          <div id="my-reports-empty" class="empty-state" hidden>
+            <h3>No reports in this view</h3>
+            <p>When you report a found item on campus, it will appear here along with any incoming claims to review.</p>
+            <button type="button" class="btn btn-primary" data-nav="report">Report Found Item</button>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- VIEW 8: MY CLAIMS                                                -->
+        <!-- ================================================================ -->
+        <section id="view-my-claims" class="view" data-view="my-claims" aria-labelledby="my-claims-heading" hidden>
+          <div class="page-header">
+            <div>
+              <h1 id="my-claims-heading">My Claims</h1>
+              <p class="page-subtitle">Ownership claims submitted by <strong id="my-claims-user-name">Tanmay Gupta</strong>. Track verification status and access approved handovers.</p>
+            </div>
+            <button type="button" class="btn btn-secondary" data-nav="browse">Browse Found Items</button>
+          </div>
+
+          <div class="tab-bar" role="tablist" aria-label="Filter my claims">
+            <button type="button" class="tab-btn is-active" role="tab" aria-selected="true" data-claims-tab="all">All Claims</button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-claims-tab="pending">Pending</button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-claims-tab="approved">Approved</button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-claims-tab="rejected">Rejected</button>
+          </div>
+
+          <div id="my-claims-list" class="records-list" aria-live="polite">
+            <!-- Populated dynamically by script.js -->
+          </div>
+
+          <div id="my-claims-empty" class="empty-state" hidden>
+            <h3>No claims in this view</h3>
+            <p>Browse found items on campus and answer a finder&rsquo;s secret question to submit an ownership claim.</p>
+            <button type="button" class="btn btn-primary" data-nav="browse">Browse Found Items</button>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- VIEW 9: PROFILE & DEMO SETTINGS                                  -->
+        <!-- ================================================================ -->
+        <section id="view-profile" class="view" data-view="profile" aria-labelledby="profile-heading" hidden>
+          <div class="page-header">
+            <div>
+              <h1 id="profile-heading">Profile &amp; Demo Settings</h1>
+              <p class="page-subtitle">Switch between demonstration student accounts to test both finder and claimant journeys end-to-end.</p>
+            </div>
+          </div>
+
+          <div class="profile-grid">
+            <!-- Active Demo Account Card -->
+            <div class="card profile-card">
+              <div class="profile-card-head">
+                <div id="profile-avatar-lg" class="avatar-circle avatar-lg" aria-hidden="true">TG</div>
+                <div>
+                  <h2 id="profile-display-name">Tanmay Gupta</h2>
+                  <p id="profile-display-meta" class="card-muted">MAINS-43925 &middot; B.Tech Computer Science</p>
+                  <p id="profile-display-email" class="card-muted">tanmay.gupta@campus.edu</p>
+                </div>
+              </div>
+
+              <div class="profile-stats-row">
+                <div class="mini-stat">
+                  <strong id="profile-stat-reports">0</strong>
+                  <span>My Reports</span>
+                </div>
+                <div class="mini-stat">
+                  <strong id="profile-stat-claims">0</strong>
+                  <span>My Claims</span>
+                </div>
+                <div class="mini-stat">
+                  <strong id="profile-stat-recovered">0</strong>
+                  <span>Recovered</span>
+                </div>
+              </div>
+
+              <div class="demo-switcher-section">
+                <h3>Switch Demonstration Student</h3>
+                <p class="card-muted">Use two student personas to test reporting an item as one student, claiming it as another, and approving the claim back as the finder.</p>
+                <div id="demo-user-switcher" class="persona-list">
+                  <!-- Populated dynamically by script.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Campus Custody & Guard Booth Directory -->
+            <div class="card profile-card">
+              <h2>Campus Guard Booths &amp; Drop-Off Desks</h2>
+              <p class="card-muted">Central reference for campus security desks so students don&rsquo;t need to walk blindly between buildings.</p>
+
+              <ul class="booth-list">
+                <li>
+                  <div>
+                    <strong>Main Gate Security Cabin</strong>
+                    <small>Open 24/7 &middot; Master key &amp; bike-key lockbox</small>
+                  </div>
+                  <span class="badge badge-custody-guard">Main Gate</span>
+                </li>
+                <li>
+                  <div>
+                    <strong>Central Library Desk</strong>
+                    <small>8:00 AM &ndash; 10:00 PM &middot; Chargers, electronics, IDs</small>
+                  </div>
+                  <span class="badge badge-custody-guard">Library</span>
+                </li>
+                <li>
+                  <div>
+                    <strong>Science Block Guard Booth</strong>
+                    <small>7:30 AM &ndash; 8:00 PM &middot; Lab notebooks &amp; calculators</small>
+                  </div>
+                  <span class="badge badge-custody-guard">Science Block</span>
+                </li>
+                <li>
+                  <div>
+                    <strong>Sports Complex Cabin</strong>
+                    <small>6:00 AM &ndash; 9:00 PM &middot; Audio gear, bottles &amp; kits</small>
+                  </div>
+                  <span class="badge badge-custody-guard">Sports Complex</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Demonstration Scope vs. Production Notice + Reset -->
+            <div class="card profile-card profile-card-full">
+              <div class="demo-disclosure">
+                <div>
+                  <h2>Demonstration Mode &amp; Data Persistence</h2>
+                  <p>
+                    This interactive prototype runs entirely in your browser using <code>localStorage</code>. Reports, claims, handover updates, and notifications persist across page refreshes on this device.
+                  </p>
+                  <p class="disclosure-note">
+                    <strong>Demo vs. Production:</strong> This static build does not provide real campus SSO authentication, server-side encryption of private verification answers, or cross-device synchronization. In a production campus deployment, verification answers, uploaded photos, and handover messages would be stored and access-controlled on a secure backend server.
+                  </p>
+                </div>
+                <div class="demo-reset-box">
+                  <h3>Reset Demonstration Data</h3>
+                  <p class="card-muted">Restore the original sample items, sample claims, and notification history.</p>
+                  <button type="button" id="btn-reset-demo" class="btn btn-danger">Reset Demo Data</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div class="footer-inner">
+          <p><strong>FindIt &mdash; Campus Lost &amp; Found System</strong> &middot; Centralized search, clear custody status, private ownership verification.</p>
+          <p class="footer-meta">Client-side demonstration prototype using browser <code>localStorage</code> (no backend server).</p>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar (Mirrors V2 Mobile Wireframe Flow) -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+    <button type="button" class="bottom-nav-item is-active" data-nav="home">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"></path>
+      </svg>
+      <span>Home</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-nav="browse">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <span>Browse</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-nav="report">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"></circle>
+        <line x1="12" y1="8" x2="12" y2="16"></line>
+        <line x1="8" y1="12" x2="16" y2="12"></line>
+      </svg>
+      <span>Report</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-nav="my-claims">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        <polyline points="9 12 11 14 15 10"></polyline>
+      </svg>
+      <span>Claims</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-nav="profile">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+  <!-- In-App Notifications Drawer -->
+  <div id="notif-overlay" class="notif-overlay" hidden></div>
+  <aside id="notifications-panel" class="notifications-panel" aria-label="In-app notifications" hidden>
+    <div class="notif-panel-header">
+      <h2>Notifications</h2>
+      <div class="notif-panel-actions">
+        <button type="button" id="btn-mark-all-read" class="btn-link">Mark all read</button>
+        <button type="button" id="btn-close-notifications" class="icon-btn" aria-label="Close notifications">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="notifications-list" class="notif-list" aria-live="polite">
+      <!-- Populated dynamically by script.js -->
+    </div>
+    <div id="notifications-empty" class="notif-empty" hidden>
+      <p>No notifications yet. Activity updates for reports, claims, and recoveries will appear here.</p>
+    </div>
+  </aside>
+
+  <!-- Reusable Confirmation Modal -->
+  <div id="confirm-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title" hidden>
+    <div class="modal-dialog">
+      <h2 id="confirm-modal-title">Confirm Action</h2>
+      <p id="confirm-modal-message">Are you sure you want to proceed?</p>
+      <div class="modal-actions">
+        <button type="button" id="btn-modal-cancel" class="btn btn-secondary">Cancel</button>
+        <button type="button" id="btn-modal-confirm" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Toast Notification Region -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
